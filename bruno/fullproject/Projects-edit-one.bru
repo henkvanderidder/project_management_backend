@@ -1,0 +1,23 @@
+meta {
+  name: Projects-edit-one
+  type: http
+  seq: 1
+}
+
+put {
+  url: full.local/api/projects/2
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "",
+    "description": "Design Company Full Website",
+    "due_date": "2025-12-02"
+  }
+}
