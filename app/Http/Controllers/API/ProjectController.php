@@ -79,9 +79,14 @@ class ProjectController extends Controller
         $project->name = $request->name;
         $project->description = $request->description;
         $project->due_date = $request->due_date;
-
         $project->save();
-        return response()->json($project,201);
+
+        //return response()->json($project,201);
+
+        return response()->json(
+            ['message' => 'Project updated', 
+             'project' => $project]
+            ,200);
     }
 
     /**

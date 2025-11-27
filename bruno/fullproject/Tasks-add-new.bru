@@ -1,0 +1,25 @@
+meta {
+  name: Tasks-add-new
+  type: http
+  seq: 1
+}
+
+post {
+  url: full.local/api/tasks
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "project_id": "3", 
+    "title": "Third",
+    "description": "Make Company LinkedIn copy",
+    "due_date": "2025-11-30",
+    "status":"pending"
+  }
+}

@@ -1,0 +1,16 @@
+meta {
+  name: Tasks-get-all
+  type: http
+  seq: 7
+}
+
+get {
+  url: full.local/api/tasks
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

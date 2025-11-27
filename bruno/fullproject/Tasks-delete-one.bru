@@ -1,0 +1,15 @@
+meta {
+  name: Tasks-delete-one
+  type: http
+  seq: 10
+}
+
+delete {
+  url: full.local/api/tasks/2
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}

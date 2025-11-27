@@ -1,0 +1,26 @@
+meta {
+  name: Tasks-edit-one
+  type: http
+  seq: 9
+}
+
+put {
+  url: full.local/api/tasks/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "project_id": "3", 
+    "title": "First step",
+    "description": "Make Company LinkedIn Prototype",
+    "due_date": "2025-11-30",
+    "status":"pending"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
