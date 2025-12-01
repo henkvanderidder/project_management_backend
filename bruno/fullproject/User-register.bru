@@ -1,0 +1,28 @@
+meta {
+  name: User-register
+  type: http
+  seq: 11
+}
+
+post {
+  url: full.local/api/register
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: TESTTOKEN
+}
+
+body:json {
+  {
+    "name" : "Test User 2",
+    "email": "test2user@mail.nl",
+    "password": "test1234"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

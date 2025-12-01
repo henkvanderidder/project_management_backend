@@ -36,12 +36,16 @@ class TaskController extends Controller
 
         if ($validator->fails()) {
             return response()->json(
-                ['message' => $validator->errors()], 400);
+                ['message' => 'Validation error',
+                 'errors' => $validator->errors()], 400);
         }   
 
         $task = Task::create($request->all());
 
-        return response()->json($task,201);  // Waaom zonder project?
+        return response()->json(
+            ['message' => 'Task created', 
+             'task' => $task]
+            ,200);
     }
 
     /**
@@ -53,8 +57,12 @@ class TaskController extends Controller
         $task = Task::with('project')->find($id);
 
         if(!$task){
-            return response()->json(['message' => 'Task not found'],404);
+            return response()->json(
+                ['message' => 'Task not found',
+                 'errors' => ['id' => ['No task found with the given id']]
+                 ],404);
         }
+
         return response()->json($task,200); 
     }
 
@@ -67,7 +75,10 @@ class TaskController extends Controller
         $task = Task::find($id);
 
         if(!$task){
-            return response()->json(['message' => 'Task not found'],404);
+            return response()->json(
+                ['message' => 'Task not found',
+                 'errors' => ['id' => ['No task found with the given id']]
+                 ],404);
         }
         
         $validator = Validator::make($request->all(), [
@@ -80,7 +91,8 @@ class TaskController extends Controller
         
         if ($validator->fails()) {
             return response()->json(
-                ['message' => $validator->errors()], 400);
+                ['message' => 'Validation error',
+                 'errors' => $validator->errors()], 400);
         }   
 
         $task->title = $request->title;
@@ -108,8 +120,9 @@ class TaskController extends Controller
 
         if(!$task){
             return response()->json(
-                ['message' => 'Task not found']
-                ,404);
+                ['message' => 'Task not found',
+                 'errors' => ['id' => ['No task found with the given id']]
+                 ],404);
         }
         $task->delete();
 

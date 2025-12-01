@@ -32,12 +32,16 @@ class ProjectController extends Controller
 
         if ($validator->fails()) {
             return response()->json(
-                ['message' => $validator->errors()], 400);
+                ['message' => 'Validation error',
+                 'errors' => $validator->errors()], 400);
         }   
 
         $project = Project::create($request->all());
 
-        return response()->json($project,201);
+        return response()->json(
+            ['message' => 'Project created', 
+             'project' => $project]
+            ,200);
     }
     /**
      * Display the specified resource.
@@ -48,8 +52,12 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         if(!$project){
-            return response()->json(['message' => 'Project not found'],404);
+            return response()->json(
+                ['message' => 'Project not found',
+                 'errors' => ['id' => ['No project found with the given id']]
+                 ],404);
         }
+        
         return response()->json($project,200);  
     }
 
@@ -62,7 +70,10 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         if(!$project){
-            return response()->json(['message' => 'Project not found'],404);
+            return response()->json(
+                ['message' => 'Project not found',
+                 'errors' => ['id' => ['No project found with the given id']]
+                 ],404);
         }
         
         $validator = Validator::make($request->all(), [
@@ -73,7 +84,8 @@ class ProjectController extends Controller
         
         if ($validator->fails()) {
             return response()->json(
-                ['message' => $validator->errors()], 400);
+                ['message' => 'Validation error',
+                 'errors' => $validator->errors()], 400);
         }   
 
         $project->name = $request->name;
@@ -98,10 +110,16 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         if(!$project){
-            return response()->json(['message' => 'Project not found'],404);
+            return response()->json(
+                ['message' => 'Project not found',
+                 'errors' => ['id' => ['No project found with the given id']]
+                 ],404);
         }
         $project->delete();
-        return response()->json(['message' => 'Project deleted successfully'],204); 
+
+        return response()->json(
+            ['message' => 'Project deleted successfully']
+            ,204); 
     }
     
 }
