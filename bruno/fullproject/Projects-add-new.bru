@@ -7,17 +7,21 @@ meta {
 post {
   url: full.local/api/projects
   body: json
-  auth: none
+  auth: bearer
 }
 
 headers {
   Content-Type: application/json
 }
 
+auth:bearer {
+  token: 30|fccSe565EjSX3LVsINmqCINSMw81oIaAEgObNF5Af6a32130
+}
+
 body:json {
   {
-    "name": "LinkedIn",
-    "description": "Company LinkedIn Project",
-    "due_date": "2025-11-30"
+    "name": "PrintIT",
+    "description": "Company PrintIT Project",
+    "due_date": "2025-12-21"
   }
 }

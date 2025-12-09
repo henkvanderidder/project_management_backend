@@ -10,13 +10,17 @@ post {
   auth: bearer
 }
 
+headers {
+  Accept: application/json
+}
+
 auth:bearer {
   token: TESTTOKEN
 }
 
 body:json {
   {
-    "email": "test3user@mail.nl",
+    "email": "testuser@mail.nl",
     "password": "test1234"
   }
 }
