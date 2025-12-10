@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Task;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth; 
 
 class TaskController extends Controller
 {
@@ -16,7 +17,12 @@ class TaskController extends Controller
     public function index()
     {
         //
-        $tasks = Task::with('project')->get();
+        $tasks = Task::with('project')
+            ->whereHas('project', function($query){
+                // only tasks belonging to projects of the authenticated user
+                $query->where('user_id', Auth::id());
+            })
+            ->get();
         return response()->json($tasks,200);
     }
 
@@ -54,7 +60,12 @@ class TaskController extends Controller
     public function show(string $id)
     {
         //
-        $task = Task::with('project')->find($id);
+        $task = Task::with('project')
+            ->whereHas('project', function($query){
+                // only tasks belonging to projects of the authenticated user
+                $query->where('user_id', Auth::id());
+            })
+            ->find($id);
 
         if(!$task){
             return response()->json(
@@ -72,7 +83,10 @@ class TaskController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $task = Task::find($id);
+        $task = Task::whereHas('project', function($query){
+                // only tasks belonging to projects of the authenticated user
+                $query->where('user_id', Auth::id());
+            })->find($id);
 
         if(!$task){
             return response()->json(

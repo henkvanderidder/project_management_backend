@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth; 
 
 class ProjectController extends Controller
 {
@@ -15,7 +16,9 @@ class ProjectController extends Controller
     public function index()
     {
         //
-        return response()->json(Project::all(),200);
+        $projects = Project::where('user_id', Auth::id())->get();
+        //return response()->json(Project::all(),200);
+        return response()->json($projects,200);
     }
 
     /**
@@ -36,7 +39,13 @@ class ProjectController extends Controller
                  'errors' => $validator->errors()], 400);
         }   
 
-        $project = Project::create($request->all());
+        $data['name'] = $request->name;
+        $data['description'] = $request->description;
+        $data['due_date'] = $request->due_date;
+        $data['user_id'] = Auth::id();  // assign the authenticated user's id
+                                        // kan ook: auth()->id Auth::id()
+
+        $project = Project::create($data);
 
         return response()->json(
             ['message' => 'Project created', 
@@ -48,8 +57,8 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        // find project with its tasks
-        $project = Project::with('tasks')->find($id);
+        // find project with its tasks belonging to the authenticated user
+        $project = Project::with('tasks')->where('user_id', Auth::id())->find($id);
 
         if(!$project){
             return response()->json(
@@ -67,7 +76,7 @@ class ProjectController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        $project = Project::find($id);
+        $project = Project::where('user_id', Auth::id())->find($id);
 
         if(!$project){
             return response()->json(
@@ -91,6 +100,7 @@ class ProjectController extends Controller
         $project->name = $request->name;
         $project->description = $request->description;
         $project->due_date = $request->due_date;
+        $project->user_id = Auth::id(); 
         $project->save();
 
         //return response()->json($project,201);
@@ -107,7 +117,7 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         //
-        $project = Project::find($id);
+        $project = Project::where('user_id', Auth::id())->find($id);
 
         if(!$project){
             return response()->json(
