@@ -5,21 +5,25 @@ meta {
 }
 
 post {
-  url: full.local/api/tasks
+  url: http://laravel.api/api/tasks
   body: json
-  auth: none
+  auth: bearer
 }
 
 headers {
   Content-Type: application/json
 }
 
+auth:bearer {
+  token: 2|dVDIT5M801Tga2XsgNHQmFjGTXkmYqTOkmvkHals64714266
+}
+
 body:json {
   {
-    "project_id": "3", 
-    "title": "Third",
-    "description": "Make Company LinkedIn copy",
-    "due_date": "2025-11-30",
+    "project_id": "1", 
+    "title": "Images",
+    "description": "Gather images",
+    "due_date": "2025-12-15",
     "status":"pending"
   }
 }

@@ -5,7 +5,7 @@ meta {
 }
 
 post {
-  url: full.local/api/login
+  url: http://laravel.api/api/login
   body: json
   auth: bearer
 }
@@ -20,7 +20,7 @@ auth:bearer {
 
 body:json {
   {
-    "email": "testuser@mail.nl",
+    "email": "test1user@mail.nl",
     "password": "test1234"
   }
 }

@@ -5,19 +5,23 @@ meta {
 }
 
 put {
-  url: full.local/api/projects/2
+  url: http://laravel.api/api/projects/1
   body: json
-  auth: none
+  auth: bearer
 }
 
 headers {
   Content-Type: application/json
 }
 
+auth:bearer {
+  token: 2|dVDIT5M801Tga2XsgNHQmFjGTXkmYqTOkmvkHals64714266
+}
+
 body:json {
   {
-    "name": "",
-    "description": "Design Company Full Website",
-    "due_date": "2025-12-02"
+    "name": "LinkedIn",
+    "description": "Company LinkedIn Project",
+    "due_date": "2025-12-31"
   }
 }
